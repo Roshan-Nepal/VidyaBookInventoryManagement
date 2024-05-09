@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<div class="contaier">
+    <p th:text="${message}"></p>
+    <div class="form-container">
+        <form method="post" action="#" th:action="@{/login}" th:object="${login}">
+            <label for="identifier">Email/Username:
+                <input id="identifier" type="text" th:field="*{identifier}">
+            </label>
+            <br>
+            <label>Password:
+                <input type="password" name="password">
+            </label>
+            <br>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</div>
+</body>
+</html>
