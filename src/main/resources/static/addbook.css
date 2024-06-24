@@ -1,0 +1,154 @@
+
+.responseMessage {
+    background-color: #8bcebc;
+    border: 1px solid #dee2e6;
+    padding: 15px;
+    margin: 10px 200px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+
+}
+
+/*.add-book-page {*/
+/*    width: 82rem;*/
+/*    margin: 20px auto;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    min-height: 80vh;*/
+/*}*/
+
+/*.addbook {*/
+/*    max-width: 600px;*/
+/*    width: 100%;*/
+/*    margin: 0 auto;*/
+/*    padding: 20px;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 5px;*/
+/*    background-color: #dddddd;*/
+/*}*/
+
+/*.addbook div {*/
+/*    margin-bottom: 15px;*/
+/*}*/
+
+/*.addbook label {*/
+/*    display: block;*/
+/*    font-weight: bold;*/
+/*    margin-bottom: 5px;*/
+/*}*/
+
+/*.addbook input[type="text"],*/
+/*.addbook input[type="date"],*/
+/*.addbook input[type="number"],*/
+/*.addbook textarea {*/
+/*    width: 100%;*/
+/*    padding: 8px;*/
+/*    box-sizing: border-box;*/
+/*    border: 1px solid #ccc;*/
+/*    border-radius: 4px;*/
+/*    font-size: 16px;*/
+/*}*/
+
+/*.addbook textarea {*/
+/*    resize: vertical;*/
+/*    height: 100px;*/
+/*}*/
+
+/*.addbook input[type="submit"] {*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*    padding: 10px;*/
+/*    background-color: #4CAF50;*/
+/*    color: white;*/
+/*    border: none;*/
+/*    border-radius: 4px;*/
+/*    font-size: 16px;*/
+/*    cursor: pointer;*/
+/*}*/
+
+/*.addbook input[type="submit"]:hover {*/
+/*    background-color: #45a049;*/
+/*}*/
+
+/*.btn:hover {*/
+/*    background-color: #4caf98;*/
+/*}*/
+/* addbook.css */
+
+.add-book-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 100px;
+}
+
+.addbook {
+    width: 500px;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+}
+
+.addbook form {
+    margin-bottom: 0;
+}
+
+.addbook label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.addbook input[type="text"],
+.addbook input[type="number"],
+.addbook textarea,
+.addbook input[type="date"] {
+    width: calc(100% - 20px);
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.addbook textarea {
+    height: 80px;
+}
+
+.addbook input[type="submit"] {
+    background-color: #00ffe1;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: calc(100% - 20px);
+    margin: 10px 0;
+}
+
+.addbook input[type="submit"]:hover {
+    background-color: #00b389;
+}
+
+
+.price-quantity {
+    display: flex;
+    justify-content: space-between;
+}
+
+.price-quantity div {
+    width: 48%;
+}
+
+
+
+.error-message {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+

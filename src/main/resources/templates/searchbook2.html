@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Product</title>
+    <link rel="stylesheet" href="/topbar.css">
+    <link rel="stylesheet" href="/sidebar.css">
+    <link rel="stylesheet" href="/footer.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:insert="~{fragments/top :: top-bar}"></div>
+<div th:insert="~{fragments/nav :: nav-bar}"></div>
+<div th:insert="~{fragments/footer :: footer}"></div>
+
+<!--<div th:insert="fragments/footer :: footer"></div>-->
+<!--<div class="searchProduct" id="searchProduct">-->
+<!--    <form action="#" method="POST" th:action="@{/home/getBook}" th:object="${bookRequestDto}">-->
+<!--        <label for="search-input">Search</label>-->
+<!--        <input type="text" id="search-input" th:field="*{identifier}">-->
+<!--        <input type="submit" value="OK">-->
+<!--    </form>-->
+<!--</div>-->
+<!--<div class="message" role="alert">-->
+<!--    <div th:if="${productNotFound}">-->
+<!--        <strong th:text="${notFound}">PRODUCT NOT FOUND</strong>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div id="searchProduct">
+    <h4>Search Book Details</h4>
+    <br>
+    <div class="s-bar">
+        <form th:action="@{/home/getBook}" th:object="${bookRequestDto}" method="post" class="searchbar">
+            <div class="search-container">
+                <input type="text" name="id" th:field="*{identifier}" class="search-field" required
+                       placeholder="Book Title or Author" style="width: 80rem;border-radius: 20px;padding: 10px;text-align: center;margin-left: 10px">
+                <input type="submit" class="searchbutton" style="border-radius: 20px;background-color: #73b299; width: 20rem;padding: 10px" value="Search"></input>
+
+            </div>
+        </form>
+    </div>
+    <br>
+    <div th:if="${bookNotFound}" class="mt-3">
+        <div class="book-not-found" role="alert">
+            Book Not Found
+        </div>
+    </div>
+    <br>
+    <div th:if="${bookFound}">
+        <!--                <strong>Book Found</strong>-->
+        <br>
+        <table class="table table-success table-striped">
+            <thead>
+            <th>SN</th>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>PublishedDate</th>
+            </thead>
+            <tbody>
+            <tr th:each="book, index : ${foundBook}" }>
+                <td th:text="${index.index + 1}"></td>
+                <td th:text="${book.id}"></td>
+                <td th:text="${book.title}"></td>
+                <td th:text="${book.author}"></td>
+                <td th:text="${book.description}"></td>
+                <td th:text="${book.price}"></td>
+                <td th:text="${book.quantity}"></td>
+                <td th:text="${book.publishedDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Suppliers</title>
+    <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" href="/footer.css">
+    <link rel="stylesheet" href="/supplier.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.0.2/css/bootstrap.min.css">
+</head>
+<body>
+<div th:insert="~{fragments/test :: top-bar}"></div>
+<div th:insert="~{fragments/test :: nav-bar}"></div>
+<div class="message" role="alert">
+
+    <div th:if="${addSupplierSuccess}" class="responseMessage">
+        <strong>SUPPLIER ADDED SUCCESSFULLY</strong>
+    </div>
+    <div th:if="${addBookFailed}" class="responseMessage" style="background-color: #d75565">
+        <strong>DUPLICATE SUPPLIER EMAIL OR NAME</strong>
+    </div>
+    <div th:if="${deleteSupplierSuccess}" class="responseMessage">
+        <strong>SUPPLIER DELETED SUCCESSFULLY</strong>
+    </div>
+    <div th:if="${deleteSupplierFailed}" class="responseMessage" style="background-color: #d75565">
+        <strong>SUPPLIER DELETION  FAILED</strong>
+    </div>
+    <div th:if="${updateSupplierSuccess}" class="responseMessage">
+        <strong>SUPPLIER UPDATED SUCCESSFULLY</strong>
+    </div>
+    <div th:if="${updateBookFailed}" class="responseMessage" style="background-color: #d75565">
+        <strong>DUPLICATE SUPPLIER EMAIL OR NAME</strong>
+    </div>
+
+</div>
+<div class="addSupplier">
+<a href="#" th:href="@{/home/addsupplier}" class="add-button">Add Supplier</a>
+</div>
+<div class="m-5">
+<table class="table table-hover">
+    <thead>
+    <th>SN</th>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Contact Number</th>
+    <th>Action</th>
+    </thead>
+    <tbody>
+    <tr th:each="supplier, index : ${suppliers}">
+        <td th:text="${index.index + 1}"></td>
+        <td th:text="${supplier.getSupplierId()}"></td>
+        <td th:text="${supplier.getSupplierName()}"></td>
+        <td th:text="${supplier.getSupplierEmail()}"></td>
+        <td th:text="${supplier.getSupplierContactNumber()}"></td>
+        <td>
+            <a th:href="@{/home/updatesupplier/{id}(id=${supplier.getSupplierId()})}" class="edit-button">EDIT</a>
+            <a th:href="@{/home/deletesupplier/{id}(id=${supplier.getSupplierId()})}" class="delete-button">DELETE</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</div>
+<div th:insert="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

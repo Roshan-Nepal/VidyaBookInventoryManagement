@@ -3,22 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
+    <link rel="stylesheet" href="/login.css">
 </head>
 <body>
-<div class="contaier">
-    <p th:text="${message}"></p>
-    <div class="form-container">
-        <form method="post" action="#" th:action="@{/login}" th:object="${login}">
-            <label for="identifier">Email/Username:
-                <input id="identifier" type="text" th:field="*{identifier}">
-            </label>
-            <br>
-            <label>Password:
-                <input type="password" name="password" th:field ="*{password}">
-            </label>
-            <br>
-            <input type="submit" value="Login">
-        </form>
+<div class="login-form">
+    <form method="post" action="#" th:action="@{/login}" th:object="${login}">
+        <p class="sname">Vidya Book Store</p>
+        <label for="identifier">Email/Username:</label>
+        <input id="identifier" type="text" th:field="*{identifier}">
+        <br>
+        <label for="password">Password:</label>
+        <input id="password" type="password" name="password" th:field="*{password}">
+        <br>
+        <input type="submit" value="Login">
+    </form>
+    <div class="message" role="alert">
+        <div th:if="${loginRequired}">
+            <strong class="responseMessage">LOGIN TO CONTINUE</strong>
+        </div>
+        <div th:if="${logout}">
+            <div class="responseMessage">YOU HAVE BEEN LOGGED-OUT</div>
+        </div>
+        <div th:if="${invalid}">
+            <div class="responseMessage">INVALID CREDENTIAL</div>
+        </div>
+
     </div>
 </div>
 </body>

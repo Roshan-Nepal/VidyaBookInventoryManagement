@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/sidebar.css">
+</head>
+<body>
+<div  th:fragment="nav-bar" class="nav-bar">
+    <ul class="nav-list">
+        <li class="nav-item">
+            <a href="#" th:href="@{/home/getBook}">Search Book</a>
+        </li>
+        <li class="nav-item">
+            <a href="#" th:href="@{/home/allBook}">All Book</a>
+        </li>
+        <li class="nav-item">
+            <a href="#" th:href="@{/home/addBook}">Add New Book</a>
+        </li>
+        <li class="nav-item">
+            <a href="#updateProduct">Update Book</a>
+        </li>
+        <li class="nav-item">
+            <a href="#deleteProduct">Delete Book</a>
+        </li>
+        <li class="nav-item">
+            <a href="#viewHistory" class="viewhistory">History</a>
+        </li>
+    </ul>
+</div >
+
+</body>
+</html>

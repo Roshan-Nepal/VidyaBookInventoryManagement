@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+<!--    <link rel="stylesheet" href="/header.css">-->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRRo8tV2EVPEmV8EEisHvh29GTGo0wLfc3nD9eUv9"
+          crossorigin="anonymous">
+</head>
+<body>
+<header th:fragment="top-bar" class="top-bar">
+    <div><a class="logo" href="#" th:href="@{/home}">Vidya Book Store</a></div>
+    <div class="welcome-user">
+        <span th:text="${userName}"></span>&nbsp;
+        <a class="log-out" href="#" th:href="@{/logout}">&nbsp;Logout</a>
+    </div>
+</header>
+<nav th:fragment="nav-bar" class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Library</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/home/getBook}">Search Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/home/allBook}">All Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{/home/addBook}">Add New Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  href="#updateProduct">Update Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#deleteProduct">Delete Book</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#viewHistory">History</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+
+</div>
+
+<footer th:fragment="footer"  class="footer">&#169 Roshan Nepal. All rights reserved</footer>
+</body>
+</html>

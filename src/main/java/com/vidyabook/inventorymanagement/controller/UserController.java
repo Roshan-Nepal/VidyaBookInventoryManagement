@@ -1,14 +1,14 @@
 package com.vidyabook.inventorymanagement.controller;
 
+import com.vidyabook.inventorymanagement.dto.book.BookRequestDto;
 import com.vidyabook.inventorymanagement.dto.login.UserLoginRequestDto;
 import com.vidyabook.inventorymanagement.dto.login.UserLoginResponseDto;
 import com.vidyabook.inventorymanagement.service.UserServiceImplementation;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -34,28 +34,66 @@ public class UserController {
     }
 
     @PostMapping(value = "/login")
-    public String userLogin(@ModelAttribute("login") UserLoginRequestDto userLoginRequestDto, Model model) {
+    public String userLogin(@ModelAttribute("login") UserLoginRequestDto userLoginRequestDto, Model model, RedirectAttributes redirectAttributes, HttpSession httpSession) {
         UserLoginResponseDto userLoginResponseDto = userServiceImplementation.userLogin(userLoginRequestDto.getIdentifier(), userLoginRequestDto.getPassword(), userLoginRequestDto);
         try {
             if (userLoginResponseDto.getUserName().isBlank()) {
-                model.addAttribute("message", "INVALID USERNAME OR PASSWORD");
-                return "login";
+                redirectAttributes.addFlashAttribute("invalid",true);
+//                model.addAttribute("invalid",true);
+                httpSession.setAttribute("name", "");
+                return "redirect:/login";
             }
+            httpSession.setAttribute("checkSession",true);
+            httpSession.setAttribute("username", userLoginResponseDto.getUserName());
+            model.addAttribute("loggedIn", true);
+//            model.addAttribute("userName", "Welcome, " + httpSession.getAttribute("username"));
+            model.addAttribute("bookRequestDto", new BookRequestDto());
 
-            model.addAttribute("welcomeMessage", "WELCOME " + userLoginResponseDto.getUserName().toUpperCase());
-            return "home";
+            return "redirect:/home";
         } catch (Exception e) {
-            model.addAttribute("message", "INVALID USERNAME OR PASSWORD");
+            model.addAttribute("invalid", true);
+            httpSession.invalidate();
             return "login";
         }
     }
 
     @GetMapping("/home")
 //    public String home(RedirectAttributes redirectAttributes) {
-    public String home(Model model) {
+    public String home(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes) {
+
+//        boolean message =(boolean) model.getAttribute("loggedIn");
+//          boolean sessionOn = redirectAttributes.getAttribute("session").isNew();
+//        try {
+            String sessionOn = (String) httpSession.getAttribute("username");
+            if (sessionOn == null) {
+                httpSession.invalidate();
+                redirectAttributes.addFlashAttribute("loginRequired",true);
+                return "redirect:/login";
+            }
+            return "home";
+
+//        }catch (Exception e){
+//            httpSession.invalidate();
+//            redirectAttributes.addFlashAttribute("loginRequired",true);
+//            return "redirect:/login";
+//        }
+//        return "home";
 //        model.addAttribute("message", "LOGIN TO CONTINUE");
 //        redirectAttributes.addFlashAttribute("message", "LOGIN TO CONTINUE");
-        return "redirect:/";
+
     }
 
+    @GetMapping("/logout")
+    public String logout(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes){
+        model.addAttribute("message","YOU HAVE BEEN LOGGET OUT");
+        redirectAttributes.addFlashAttribute("logout",true);
+        httpSession.invalidate();
+        return "redirect:/login";
+    }
+
+    @GetMapping("/test")
+    public String home1(){
+        return "fragments/test";
+    }
+//
 }

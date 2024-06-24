@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Top Bar</title>
+    <link rel="stylesheet" href="/topbar.css">
+</head>
+<body>
+<div  th:fragment="top-bar" class="top-bar">
+    <div><a class="logo" href="#" th:href="@{/home}">Vidya Book Store</a></div>
+    <div class="welcome-user">
+    <span th:text="${userName}"></span>&nbsp;
+        <a class="log-out" href="#" th:href="@{/logout}">&nbsp;Logout</a>
+    </div>
+</div >
+</body>
+</html>

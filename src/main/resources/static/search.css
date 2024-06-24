@@ -1,0 +1,31 @@
+.search-container {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+
+}
+.search-container input[type='text']{
+    width: 30rem;
+    margin-left: 100px ;
+}
+.search-container input[type='submit']{
+    width: 30rem;
+}
+
+.search-container .search-field {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.search-container .searchbutton {
+    flex-shrink: 0;
+}
+.book-not-found{
+    background-color: #e16c8d;
+    border: 1px solid #dee2e6;
+    padding: 15px;
+    margin: 20px 200px 20px 200px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+}

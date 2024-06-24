@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Vidya Book Inventory Management</title>
+    <title>Home</title>
+    <link rel="stylesheet" href="/header.css">
+    <link rel="stylesheet" href="/footer.css">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.0.2/css/bootstrap.min.css">
+
 </head>
 <body>
-    <h1 th:text="${welcomeMessage} + '!'"></h1>
-    <a href="#" th:href="@{/}">Logout</a>
+    <div th:insert="~{fragments/test :: top-bar}"></div>
+    <div th:insert="~{fragments/test :: nav-bar}"></div>
+    <div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 </html>

@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @NoArgsConstructor
@@ -14,7 +17,7 @@ import java.util.Date;
 @Table(name = "book")
 public class Book {
     @Id
-    @Column(name = "bookId")
+    @Column(name = "book_id")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
@@ -34,5 +37,7 @@ public class Book {
     private Long quantity;
 
     @Column(name = "published_date",nullable = true)
+    @Temporal(TemporalType.DATE)
     private Date publishedDate;
+
 }

@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class User {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "email", unique = true, nullable = false)
