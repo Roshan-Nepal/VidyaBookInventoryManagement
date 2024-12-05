@@ -26,6 +26,6 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     List<Book> findBookByIdentifier(String identifier);
     @Transactional
     @Modifying
-    @Query("UPDATE book b SET b.title = :#{#book.title}, b.author = :#{#book.author}, b.description = :#{#book.description}, b.price = :#{#book.price}, b.quantity = :#{#book.quantity}, b.publishedDate = :#{#book.publishedDate} WHERE b.id = :id")
+    @Query("UPDATE book b SET b.title = :#{#book.title}, b.author = :#{#book.author}, b.description = :#{#book.description}, b.price = :#{#book.price}, b.quantity = :#{#book.quantity},b.minStockLevel = :#{#book.minStockLevel} ,b.publishedDate = :#{#book.publishedDate} WHERE b.id = :id")
     int updateBookById(Long id,Book book);
 }

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>History</title>
-    <link rel="stylesheet" href="/header.css">
-    <link rel="stylesheet" href="/footer.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="/webjars/bootstrap/5.0.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -28,6 +28,8 @@
     </tbody>
 </table>
 </div>
+<script src="/webjars/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+<div th:insert="~{fragments/noscript :: no-script}"></div>
 <div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 </html>

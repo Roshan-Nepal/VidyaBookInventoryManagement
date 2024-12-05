@@ -26,6 +26,10 @@ public class SupplierServiceImplementation implements SupplierService {
     @Override
     public boolean updateSupplier(Long supplierId, Suppliers suppliers) {
         Suppliers supplierToUpdate = supplierRepository.getReferenceById(supplierId);
+        if(supplierToUpdate.getSupplierName().equals(suppliers.getSupplierName()) && supplierToUpdate.getSupplierEmail().equals(suppliers.getSupplierEmail())
+        && Objects.equals(supplierToUpdate.getSupplierContactNumber(),suppliers.getSupplierContactNumber())){
+            return false;
+        }
         supplierToUpdate.setSupplierName(suppliers.getSupplierName());
         supplierToUpdate.setSupplierEmail(suppliers.getSupplierEmail());
         supplierToUpdate.setSupplierContactNumber(suppliers.getSupplierContactNumber());

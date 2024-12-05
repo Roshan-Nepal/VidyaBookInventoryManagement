@@ -4,17 +4,16 @@
     <meta charset="UTF-8">
     <title>Edit Supplier Details</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/header.css">
-    <link rel="stylesheet" href="/supplier.css">
-    <link rel="stylesheet" href="/footer.css">
-    <script src="/js/suppliervalidation.js" defer></script>
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/supplier.css">
+    <link rel="stylesheet" href="/css/footer.css">
 </head>
 <body>
 <div th:insert="~{fragments/test :: top-bar}"></div>
 <div th:insert="~{fragments/test :: nav-bar}"></div>
-<div class="container m-2">
-    <h1>Add Supplier</h1>
-    <form id="supplierForm" th:action="@{/home/updatesupplier}" method="post" th:object="${supplier}">
+<div class="container mt-5">
+    <h1>Update Supplier</h1>
+    <form id="supplierForm" th:action="@{/home/updatesupplier}" method="post" th:object="${supplier}" onsubmit="return validateSupplierForm()">
         <div class="form-group">
             <label for="supplierName">Supplier Name:</label>
             <input type="text" id="supplierName" class="form-control" name="supplierName" th:field="*{supplierName}"/>
@@ -38,6 +37,9 @@
         </div>
     </form>
 </div>
+<script src="/js/suppliervalidation.js" ></script>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script src="/webjars/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

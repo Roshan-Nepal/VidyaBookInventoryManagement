@@ -19,12 +19,12 @@ public class BookLog {
 
     @Column(name = "book_name")
     private String book;
-
-
+    @Column(name = "user")
     private String user;
-    @Column(name = "action")
 
-    String action;
+    @Column(name = "action")
+    private String action;
+
     @Column(name = "performed_time", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     LocalDateTime performedTime = LocalDateTime.now();
 }

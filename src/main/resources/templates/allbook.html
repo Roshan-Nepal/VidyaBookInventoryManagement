@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>ALL Books</title>
-    <link rel="stylesheet" href="/header.css">
-    <link rel="stylesheet" href="/footer.css">
-    <link rel="stylesheet" href="/allbook.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/allbook.css">
     <link rel="stylesheet" href="/webjars/bootstrap/5.0.2/css/bootstrap.min.css">
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
 </head>
 <body>
 <div th:insert="~{fragments/test :: top-bar}"></div>
@@ -15,12 +14,12 @@
 <div class="message" role="alert">
 
     <div th:if="${updateBookFailed}" class="responseMessage" style="background-color: #d75565;margin: 50px 20px;padding: 10px; text-align: center;">
-        <strong>BOOK UPDATE FAILED</strong>
+        <strong>BOOK UPDATE FAILED! NO CHANGE IN ANY FIELD</strong>
     </div>
     <div th:if="${updateBookSuccess}" class="responseMessage" style="background-color: #80d77c;margin: 50px 20px;padding: 10px; text-align: center;">
         <strong>BOOK UPDATED SUCCESSFULLY</strong>
     </div>
-    <div th:if="${deleteteBookFailed}" class="responseMessage" style="background-color: #d75565;margin: 50px 20px;padding: 10px; text-align: center;">
+    <div th:if="${deleteBookFailed}" class="responseMessage" style="background-color: #d75565;margin: 50px 20px;padding: 10px; text-align: center;">
         <strong>BOOK DELETE FAILED</strong>
     </div>
     <div th:if="${deleteBookSuccess}" class="responseMessage" style="background-color: #80d77c;margin: 50px 20px;padding: 10px; text-align: center; color: red">
@@ -41,6 +40,7 @@
         <th>Description</th>
         <th>Price</th>
         <th>Quantity</th>
+        <th>Minimum Stock</th>
         <th>PublishedDate</th>
         <th>Action</th>
         </thead>
@@ -53,17 +53,18 @@
             <td th:text="${book.description}"></td>
             <td th:text="${book.price}"></td>
             <td th:text="${book.quantity}"></td>
+            <td th:text="${book.minStockLevel}"></td>
             <td th:text="${book.publishedDate}"></td>
             <td>
-                <a th:href="@{/home/updateBook/{id}(id=${book.id})}" class="edit-button">EDIT</a>
-                <a th:href="@{/home/deleteBook/{id}(id=${book.id})}" class="delete-button">DELETE</a>
+                <a th:href="@{/home/updateBook/{id}(id=${book.id})}" class="edit-button w-75">EDIT</a>
+                <a th:href="@{/home/deleteBook/{id}(id=${book.id})}" class="delete-button w-75">DELETE</a>
             </td>
         </tr>
         </tbody>
     </table>
 
     <nav aria-label="Pagination" th:if="${totalPages > 0}">
-        <ul class="pagination justify-content-center">
+        <ul class="pagination justify-content-center mb-5">
             <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
                 <a class="page-link" th:href="@{/home/allBook(page=${1}, size=${pageSize})}"
                    title="First Page">&lt;&lt;</a>
@@ -101,6 +102,9 @@
     </nav>
 
 </div>
+<script src="/webjars/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+
+<div th:insert="~{fragments/noscript :: no-script}"></div>
 <div th:insert="~{fragments/footer :: footer}"></div>
 </body>
 </html>

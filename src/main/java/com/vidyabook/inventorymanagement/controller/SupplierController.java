@@ -7,10 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -18,6 +15,7 @@ import java.util.List;
 import static com.vidyabook.inventorymanagement.controller.BookController.checkSession;
 
 @Controller
+@RequestMapping("/home")
 public class SupplierController {
     private final SupplierServiceImplementation supplierServiceImplementation;
 
@@ -25,7 +23,7 @@ public class SupplierController {
         this.supplierServiceImplementation = supplierServiceImplementation;
     }
 
-    @GetMapping("/home/suppliers")
+    @GetMapping("/suppliers")
     public String getAllSupplier(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes) {
         if (!checkSession(httpSession, redirectAttributes)) {
             return "redirect:/login";
@@ -37,7 +35,7 @@ public class SupplierController {
         return "supplier";
     }
 
-    @GetMapping("/home/addsupplier")
+    @GetMapping("/addsupplier")
     public String addSupplier(Model model, HttpSession httpSession, RedirectAttributes redirectAttributes) {
         if (!checkSession(httpSession, redirectAttributes)) {
             return "redirect:/login";
@@ -47,7 +45,7 @@ public class SupplierController {
         return "addsupplier";
     }
 
-    @PostMapping("/home/addsupplier")
+    @PostMapping("/addsupplier")
     public String addSupplier(@ModelAttribute Suppliers supplier, Model model, HttpSession httpSession, RedirectAttributes redirectAttributes) {
         if (!checkSession(httpSession, redirectAttributes)) {
             return "redirect:/login";
@@ -62,7 +60,7 @@ public class SupplierController {
 
     }
 
-    @GetMapping("/home/deletesupplier/{id}")
+    @GetMapping("/deletesupplier/{id}")
     public String deleteSupplier(@PathVariable Long id, HttpSession httpSession, RedirectAttributes redirectAttributes) {
         if (!checkSession(httpSession, redirectAttributes)) {
             return "redirect:/login";
@@ -76,7 +74,7 @@ public class SupplierController {
         return "redirect:/home/suppliers";
     }
 
-    @GetMapping("/home/updatesupplier/{id}")
+    @GetMapping("/updatesupplier/{id}")
     public String updateSupplier(@PathVariable Long id, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes){
         if (!checkSession(httpSession, redirectAttributes)) {
             return "redirect:/login";
@@ -90,7 +88,7 @@ public class SupplierController {
         model.addAttribute("supplier",supplier);
         return "update-supplier";
     }
-    @PostMapping("/home/updatesupplier")
+    @PostMapping("/updatesupplier")
     public String updateSupplier(@ModelAttribute Suppliers suppliers, HttpSession httpSession, Model model,RedirectAttributes redirectAttributes){
         if (!checkSession(httpSession, redirectAttributes)) {
             return "redirect:/login";

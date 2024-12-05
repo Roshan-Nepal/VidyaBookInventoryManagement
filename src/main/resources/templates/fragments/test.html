@@ -3,43 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <title>Test</title>
-<!--    <link rel="stylesheet" href="/header.css">-->
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="/header.css">
+
     <link rel="stylesheet" href="/webjars/bootstrap/5.0.2/css/bootstrap.min.css">
 </head>
 <body>
 <header th:fragment="top-bar" class="top-bar d-flex justify-content-between align-items-center p-3 bg-blue border-dark rounded-end sticky-top" style="background-color: #57A6A1;display: flex; justify-content: space-between;">
-    <div><a class="logo navbar-brand m-4 text-white"  href="#" th:href="@{/home}">Vidya Book Store</a></div>
+    <div>
+        <a class="logo navbar-brand m-4 text-white" href="#" th:href="@{/home}">
+            <img th:src="@{/images/loogo.png}" alt="logo not found" height="40px" width="40px" style="background-color: #57a6a1"/> Vidya Book Store
+        </a>
+    </div>
     <div class="welcome-user d-flex align-items-center text-white">
         <span th:text="${userName}"></span>&nbsp;
-        <a class="log-out text-decoration-none ms-2 text-white" href="#" th:href="@{/logout}">&nbsp;Logout</a>
+        <a class="log-out text-decoration-none ms-2 text-white" href="#" th:href="@{/logout}">Logout</a>
     </div>
 </header>
-<nav th:fragment="nav-bar" class="navbar p-3 sticky-top" style="background-color: #577B8D;">
-    <div class="container-fluid d-flex justify-content-center">
-        <ul class="navbar-nav d-flex flex-row">
+
+
+<nav  th:fragment="nav-bar" class="navbar navbar-expand-lg p-3" style="background-color: #577B8D;">
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link text-white mx-5" th:classappend="${cPage == 'getBook'} ? 'active'" th:href="@{/home/getBook}">Search Book</a>
+                <a class="nav-link  text-white" th:href="@{/home/getBook}">Search Book</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white mx-5" th:classappend="${cPage == 'allBook'} ? 'active'" th:href="@{/home/allBook}">All Book</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-white" th:href="@{/home/allBook}" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Books
+                </a>
+                <div class="dropdown-menu border-2 border-dark" aria-labelledby="navbarDropdownMenuLink2">
+                    <a class="dropdown-item" th:href="@{/home/allBook}">All Books</a>
+                    <a class="dropdown-item" th:href="@{/home/addBook}">Add Book</a>
+                </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link text-white mx-5" th:classappend="${cPage == 'addBook'} ? 'active'" th:href="@{/home/addBook}">Add New Book</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle  text-white" th:href="@{/home/suppliers}" id="navbarDropdownMenuLink2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Supplier
+                </a>
+                <div class="dropdown-menu border-2 border-dark" aria-labelledby="navbarDropdownMenuLink3">
+                    <a class="dropdown-item" th:href="@{/home/suppliers}">Supplier List</a>
+                    <a class="dropdown-item" th:href="@{/home/addsupplier}">Add Supplier</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle  text-white"  th:href="@{/home/order}" id="navbarDropdownMenuLink3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Order
+                </a>
+                <div class="dropdown-menu border-2 border-dark" aria-labelledby="navbarDropdownMenuLink4">
+                    <a class="dropdown-item"  th:href="@{/home/allorders}">View Orders</a>
+                    <a class="dropdown-item"  th:href="@{/home/order}">Create Order</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle  text-white" th:href="@{/home/sell}" id="navbarDropdownMenuLink4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sales
+                </a>
+                <div class="dropdown-menu border-2 border-dark" aria-labelledby="navbarDropdownMenuLink5">
+                    <a class="dropdown-item" th:href="@{/home/sell}">Sell Book</a>
+                    <a class="dropdown-item" th:href="@{/home/confirmsales}">Confirm Sales</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle  text-white" th:href="@{/home/revenue}" id="navbarDropdownMenuLink5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Report
+                </a>
+                <div class="dropdown-menu border-2 border-dark" aria-labelledby="navbarDropdownMenuLink5">
+                    <a class="dropdown-item" th:href="@{/home/revenue}">Sales Revenue</a>
+                    <a class="dropdown-item" th:href="@{/home/top-selling-books}">Top Seller</a>
+                </div>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link text-white mx-5" th:classappend="${cPage == 'supplier'} ? 'active'" th:href="@{/home/suppliers}">Supplier</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white mx-5" th:classappend="${cPage == 'order'} ? 'active'" th:href="@{/home/order}">Order</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-white mx-5" th:classappend="${cPage == 'viewHistory'} ? 'active'" th:href="@{/home/history}">History</a>
-            </li>
+
         </ul>
     </div>
 </nav>
+
+<script src="/webjars/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>

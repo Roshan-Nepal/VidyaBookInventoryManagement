@@ -1,12 +1,17 @@
 package com.vidyabook.inventorymanagement.controller;
 
+import com.vidyabook.inventorymanagement.dto.homestat.HomeStatDto;
 import com.vidyabook.inventorymanagement.dto.book.BookRequestDto;
 import com.vidyabook.inventorymanagement.dto.login.UserLoginRequestDto;
 import com.vidyabook.inventorymanagement.dto.login.UserLoginResponseDto;
+import com.vidyabook.inventorymanagement.entity.User;
+import com.vidyabook.inventorymanagement.service.BookServiceImplementation;
 import com.vidyabook.inventorymanagement.service.UserServiceImplementation;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -15,9 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     private final UserServiceImplementation userServiceImplementation;
-
-    public UserController(UserServiceImplementation userServiceImplementation) {
+    private final BookServiceImplementation bookServiceImplementation;
+    public UserController(UserServiceImplementation userServiceImplementation,BookServiceImplementation bookServiceImplementation) {
         this.userServiceImplementation = userServiceImplementation;
+        this.bookServiceImplementation = bookServiceImplementation;
     }
 
     @GetMapping(value = "/")
@@ -70,6 +76,8 @@ public class UserController {
                 redirectAttributes.addFlashAttribute("loginRequired",true);
                 return "redirect:/login";
             }
+            HomeStatDto stats = bookServiceImplementation.home();
+            model.addAttribute("stats", stats);
             return "home";
 
 //        }catch (Exception e){
@@ -91,6 +99,22 @@ public class UserController {
         return "redirect:/login";
     }
 
+//    @GetMapping("/home/register")
+//    public String showRegistrationForm(Model model) {
+//        model.addAttribute("user", new User());
+//        return "registrationForm"; // Thymeleaf template name
+//    }
+//
+//    @PostMapping("/home/register")
+//    public String registerUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return "registrationForm";
+//        }
+//
+//        user.setPassword(user.getPlainPassword());
+//        userServiceImplementation.saveUser(user);
+//        return "redirect:/login";
+//    }
     @GetMapping("/test")
     public String home1(){
         return "fragments/test";

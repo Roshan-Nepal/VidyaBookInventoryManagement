@@ -1,11 +1,11 @@
 package com.vidyabook.inventorymanagement.service;
 
+import com.vidyabook.inventorymanagement.dto.homestat.HomeStatDto;
 import com.vidyabook.inventorymanagement.dto.book.BookDtoMapper;
 import com.vidyabook.inventorymanagement.dto.book.BookDto;
 import com.vidyabook.inventorymanagement.entity.Book;
 import com.vidyabook.inventorymanagement.entity.BookLog;
-import com.vidyabook.inventorymanagement.repository.BookLogRepository;
-import com.vidyabook.inventorymanagement.repository.BookRepository;
+import com.vidyabook.inventorymanagement.repository.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -14,7 +14,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -26,15 +25,22 @@ public class BookServiceImplementation implements BookService {
     private final BookRepository bookRepository;
     private final BookDtoMapper bookDtoMapper;
     private final BookLogRepository bookLogRepository;
+    private final SupplierRepository supplierRepository;
+    private final UserRepository userRepository;
+    private final SaleRepository saleRepository;
     private BookLog bookLog;
     HttpSession session;
 
     //    private  BookResponseDto bookResponseDto;
-    public BookServiceImplementation(BookRepository bookRepository,BookDtoMapper bookDtoMapper,BookLogRepository bookLogRepository,HttpSession session) {
+    public BookServiceImplementation(BookRepository bookRepository, BookDtoMapper bookDtoMapper, BookLogRepository bookLogRepository, HttpSession session,
+                                     SupplierRepository supplierRepository, UserRepository userRepository,SaleRepository saleRepository) {
         this.bookRepository = bookRepository;
         this.bookDtoMapper = bookDtoMapper;
         this.bookLogRepository = bookLogRepository;
         this.session = session;
+        this.supplierRepository = supplierRepository;
+        this.userRepository = userRepository;
+        this.saleRepository = saleRepository;
     }
 
 
@@ -64,7 +70,7 @@ public class BookServiceImplementation implements BookService {
             Book addedBook = bookRepository.save(book);
             bookLog = new BookLog();
             bookLog.setBook(book.getTitle());
-            bookLog.setUser((String)session.getAttribute("username"));
+            bookLog.setUser((String) session.getAttribute("username"));
             bookLog.setAction("ADDED");
             bookLogRepository.save(bookLog);
             return bookRepository.findById(addedBook.getId()).isPresent();
@@ -85,46 +91,73 @@ public class BookServiceImplementation implements BookService {
     }
 
     @Override
-    public boolean updateBook(Long id,Book book) {
-//        int updatedRows = bookRepository.updateBookById(id, book);
-        Book bookTOUpdate = bookRepository.getReferenceById(id);
-        bookTOUpdate.setAuthor(book.getAuthor());
-        bookTOUpdate.setTitle(book.getTitle());
-        bookTOUpdate.setPrice(book.getPrice());
-        bookTOUpdate.setQuantity(book.getQuantity());
-        bookTOUpdate.setPublishedDate(book.getPublishedDate());
-        bookTOUpdate.setDescription(book.getDescription());
+    public boolean updateBook(Long id, Book book) {
+
+        Book bookToUpdate = bookRepository.getReferenceById(id);
+        if (bookToUpdate.getTitle().equals(book.getTitle())
+                && bookToUpdate.getAuthor().equals(book.getAuthor())
+                && Objects.equals(bookToUpdate.getPrice(), book.getPrice())
+                && Objects.equals(bookToUpdate.getQuantity(), book.getQuantity())
+                && Objects.equals(bookToUpdate.getMinStockLevel(), book.getMinStockLevel())
+                && Objects.equals(bookToUpdate.getPublishedDate(), book.getPublishedDate())
+                && Objects.equals(bookToUpdate.getDescription(), book.getDescription())) {
+                return false;
+        }
+        bookToUpdate.setAuthor(book.getAuthor());
+        bookToUpdate.setTitle(book.getTitle());
+        bookToUpdate.setPrice(book.getPrice());
+        bookToUpdate.setQuantity(book.getQuantity());
+        bookToUpdate.setMinStockLevel(book.getMinStockLevel());
+        bookToUpdate.setPublishedDate(book.getPublishedDate());
+        bookToUpdate.setDescription(book.getDescription());
         bookLog = new BookLog();
         bookLog.setBook(book.getTitle());
-        bookLog.setUser((String)session.getAttribute("username"));
+        bookLog.setUser((String) session.getAttribute("username"));
         bookLog.setAction("UPDATED");
         bookLogRepository.save(bookLog);
-        Book up = bookRepository.save(bookTOUpdate);
-//        return  updatedRows > 0;
+        Book up = bookRepository.save(bookToUpdate);
         return Objects.equals(up.getId(), book.getId());
     }
 
     @Override
     public boolean deleteBook(Long id) {
         bookLog = new BookLog();
-        bookLog.setBook(bookRepository.getReferenceById(id).getTitle());
-        bookLog.setUser((String)session.getAttribute("username"));
-        bookLog.setAction("DELETED");
-        bookLogRepository.save(bookLog);
+//        bookLog.setBook(bookRepository.getReferenceById(id).getTitle());
+//        bookLog.setUser((String) session.getAttribute("username"));
+//        bookLog.setAction("DELETED");
+//        bookLogRepository.save(bookLog);
+        Book book = bookRepository.findById(id).orElse(null);
+        if(book == null || saleRepository.findByBook(book.getTitle())){
+            return false;
+        }
         bookRepository.deleteById(id);
-        Optional<Book> check =bookRepository.findById(id);
+        Optional<Book> check = bookRepository.findById(id);
         return check.isEmpty();
     }
 
     @Override
     public List<BookLog> getLogs() {
-//        return bookLogRepository.findAll(Sort.by(Sort.Direction.ASC,"performed_time"));
         return bookLogRepository.findAll(Sort.by(Sort.Direction.DESC, "performedTime"));
     }
 
+    public HomeStatDto home() {
+        long totalBooks = bookRepository.count();
+        long totalSuppliers = supplierRepository.count();
+        long totalUsers = userRepository.count();
 
-//    @Override
-//    public Optional<Book> getBooks(){
-//        return
-//    }
+        return new HomeStatDto(totalBooks, totalSuppliers, totalUsers);
+    }
+
+    @Override
+    public List<Book> findAllBook() {
+        return bookRepository.findAll();
+    }
+    @Override
+    public List<String> getAllBookTitles() {
+        return bookRepository.findAll()
+                .stream()
+                .map(Book::getTitle)
+                .collect(Collectors.toList());
+    }
+
 }

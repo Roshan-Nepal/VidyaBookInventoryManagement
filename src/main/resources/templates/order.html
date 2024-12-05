@@ -3,26 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <title>Order</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
+    <link rel="stylesheet" href="/css/bookOrder.css">
 </head>
 <body>
 <div th:insert="~{fragments/test :: top-bar}"></div>
 <div th:insert="~{fragments/test :: nav-bar}"></div>
-<div class="order-place">
-    <form id="orderForm" th:action="@{/home/order}" onclick="return validateOrder()">
-
-        <div>
-            <label for="book1">Book Title:</label>
-            <input type="text" id="book1">
+<div class="order-place m-5">
+    <div class="message mb-3" role="alert">
+        <div th:if="${addBookOrderSuccess}" class="alert-success text-center p-3">
+            <strong>BOOK ORDERED CREATED SUCCESSFULLY</strong>
         </div>
-        <div>
-            <label for="quantity1">Book Title:</label>
-            <input type="text" id="quantity1">
+        <div th:if="${addBookOrderFailed}" class="alert-danger text-center p-3">
+            <strong>FAILED PLACING ORDER</strong>
         </div>
-        <button type="button" onclick="return addMoreInput()"></button>
+    </div>
+    <button type="button" onclick="return addNewInput()" class="btn-primary p-2">ADD MORE BOOK</button>
+<!--    <p id="toManyInputs" class="alert-danger text-center"></p>-->
+    <p id="titleError" class="alert-danger text-center"></p>
+    <p id="authorError" class="alert-danger text-center"></p>
+    <p id="quantityError" class="alert-danger text-center"></p>
+    <p id="supplierError" class="alert-danger text-center"></p>
+    <form id="orderForm" th:action="@{/home/order}" onsubmit="return validateOrder()" method="post" th:object="${orderItem}">
+        <div class="supplier">
+            <label for="supplierEmail">Supplier:</label>
+            <select name="supplierEmail" id="supplierEmail" required>
+                <option  selected value="">Select a supplier</option>
+                <th:block th:each="supplier : ${suppliers}">
+                    <option th:value="${supplier.supplierEmail}" th:text="${supplier.supplierName}"></option>
+                </th:block>
+            </select>
+        </div>
+        <div id="input-container">
+            <div class="input-group">
+                <input type="text" name="bookTitle[]" placeholder="Book Title" th:filed="*{bookTitle}" required>
+                <input type="text" name="bookAuthor[]" placeholder="Book Author" th:filed="*{authorName}" required>
+                <input type="number" name="quantity[]" placeholder="Quantity" th:filed="*{quantity}" required>
+            </div>
+        </div>
+        <input type="submit" value="Place Order" class="mt-2">
     </form>
 </div>
-
+<div th:insert="~{fragments/noscript :: no-script}"></div>
 <div th:insert="~{fragments/footer :: footer}"></div>
+<script src="/webjars/bootstrap/5.0.2/js/bootstrap.bundle.min.js"></script>
+<script src="/js/addNewInput.js"></script>
+<script src="/js/validateOrder.js"></script>
 
 </body>
 </html>

@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="/login.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
 <div class="login-form">
     <form method="post" action="#" th:action="@{/login}" th:object="${login}">
-        <p class="sname">Vidya Book Store</p>
+        <p class="sname"> <img th:src="@{/images/loogo.png}" alt="logo not found" height="40px" width="40px" style="background-color: #5cb093;vertical-align: middle;
+    margin-right: 5px;"/>Vidya Book Store</p>
         <label for="identifier">Email/Username:</label>
         <input id="identifier" type="text" th:field="*{identifier}">
         <br>
@@ -30,5 +31,6 @@
 
     </div>
 </div>
+<div th:insert="~{fragments/noscript :: no-script}"></div>
 </body>
 </html>

@@ -24,4 +24,7 @@ public interface BookService {
     boolean deleteBook(Long id);
 
     List<BookLog> getLogs();
+
+    List<Book> findAllBook();
+    List<String> getAllBookTitles();
 }

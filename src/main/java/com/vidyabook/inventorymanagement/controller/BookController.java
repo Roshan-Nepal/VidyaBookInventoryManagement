@@ -24,6 +24,7 @@ import java.util.List;
 
 
 @Controller
+@RequestMapping("/home")
 public class BookController {
     private final BookServiceImplementation bookServiceImplementation;
 
@@ -31,7 +32,7 @@ public class BookController {
         this.bookServiceImplementation = bookServiceImplementation;
     }
 
-    @GetMapping("/home/getBook")
+    @GetMapping("/getBook")
     public String getBook(Model model, HttpSession httpSession,RedirectAttributes redirectAttributes) {
         if(!checkSession(httpSession,redirectAttributes)){
             return "redirect:/login";
@@ -42,7 +43,7 @@ public class BookController {
 
     }
 
-    @PostMapping("/home/getBook")
+    @PostMapping("/getBook")
     public String getBook(@ModelAttribute("bookRequestDto") BookRequestDto bookRequestDto, Model model, RedirectAttributes redirectAttributes,HttpSession httpSession) {
         if(!checkSession(httpSession,redirectAttributes)){
             return "redirect:/login";
@@ -59,7 +60,7 @@ public class BookController {
         return "searchBook";
     }
 
-    @GetMapping("/home/allBook")
+    @GetMapping("/allBook")
     public String getAllBook(Model model, RedirectAttributes redirectAttributes, HttpSession httpSession, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "5") int size) {
         if(!checkSession(httpSession,redirectAttributes)){
             return "redirect:/login";
@@ -77,7 +78,7 @@ public class BookController {
         return "allbook";
     }
 
-    @GetMapping("/home/addBook")
+    @GetMapping("/addBook")
     public String addBook(Model model,RedirectAttributes redirectAttributes,HttpSession httpSession){
         if(!checkSession(httpSession,redirectAttributes)){
             return "redirect:/login";
@@ -88,7 +89,7 @@ public class BookController {
         return "addbook";
     }
 
-    @PostMapping("/home/addBook")
+    @PostMapping("/addBook")
     public String addBook(@ModelAttribute("book") Book book, Model model, RedirectAttributes redirectAttributes, HttpSession httpSession, BindingResult result){
         if(!checkSession(httpSession,redirectAttributes)){
             return "redirect:/login";
@@ -110,7 +111,7 @@ public class BookController {
         return "redirect:/home/addBook";
     }
 
-    @GetMapping("/home/updateBook/{id}")
+    @GetMapping("/updateBook/{id}")
     public String updateBook(Model model,RedirectAttributes redirectAttributes,HttpSession httpSession,@PathVariable(name = "id") Long id){
         if(!checkSession(httpSession,redirectAttributes)){
             return "redirect:/login";
@@ -125,7 +126,7 @@ public class BookController {
         model.addAttribute("visitAddBook",true);
         return "updatebook";
     }
-    @PostMapping("/home/updateBook")
+    @PostMapping("/updateBook")
     public String updateBook(@ModelAttribute("book") Book book, Model model,RedirectAttributes redirectAttributes){
 //        model.addAttribute("currentPage", "allBook");
         boolean success =bookServiceImplementation.updateBook(book.getId(),book);
@@ -137,17 +138,17 @@ public class BookController {
         return "redirect:/home/allBook";
     }
 
-    @GetMapping("/home/deleteBook/{id}")
+    @GetMapping("/deleteBook/{id}")
     public String deleteBook(@PathVariable(name = "id") Long id, RedirectAttributes redirectAttributes){
         boolean success =bookServiceImplementation.deleteBook(id);
         if(success){
             redirectAttributes.addFlashAttribute("deleteBookSuccess",true);
             return "redirect:/home/allBook";
         }
-        redirectAttributes.addFlashAttribute("deleteeBookFailed",true);
+        redirectAttributes.addFlashAttribute("deleteBookFailed",true);
         return "redirect:/home/allBook";
     }
-    @GetMapping("/home/history")
+    @GetMapping("/history")
     public String histroy(Model model, RedirectAttributes redirectAttributes,HttpSession httpSession){
         if(!checkSession(httpSession,redirectAttributes)){
             return "redirect:/login";

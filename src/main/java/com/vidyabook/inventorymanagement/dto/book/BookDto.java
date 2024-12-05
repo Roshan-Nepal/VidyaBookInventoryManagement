@@ -9,6 +9,7 @@ public record BookDto(
         Date publishedDate,
         Double price,
         Long quantity,
+        int minStockLevel,
         String description
 
 ) {

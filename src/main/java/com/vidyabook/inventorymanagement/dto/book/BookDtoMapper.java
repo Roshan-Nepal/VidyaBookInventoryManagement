@@ -15,6 +15,7 @@ public class BookDtoMapper implements Function<Book, BookDto> {
                 book.getPublishedDate(),
                 book.getPrice(),
                 book.getQuantity(),
+                book.getMinStockLevel(),
                 book.getDescription()
         );
     }

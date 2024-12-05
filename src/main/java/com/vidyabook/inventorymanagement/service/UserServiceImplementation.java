@@ -2,6 +2,7 @@ package com.vidyabook.inventorymanagement.service;
 
 import com.vidyabook.inventorymanagement.dto.login.UserLoginRequestDto;
 import com.vidyabook.inventorymanagement.dto.login.UserLoginResponseDto;
+import com.vidyabook.inventorymanagement.entity.User;
 import com.vidyabook.inventorymanagement.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +24,9 @@ public class UserServiceImplementation implements UserService {
         }
         userLoginResponseDto.setUserName("");
         return userLoginResponseDto;
+    }
+    @Override
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 }

@@ -40,4 +40,7 @@ public class Book {
     @Temporal(TemporalType.DATE)
     private Date publishedDate;
 
+    @Column(name = "min_stock_level",nullable = false)
+    private int minStockLevel;
+
 }
